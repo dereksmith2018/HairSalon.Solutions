@@ -10,11 +10,11 @@ namespace HairSalon.Models
     private int _employee_Id;
     private string _customer;
 
-    public Customer(string name, int employeeId, int Id =0)
+    public Customer(string name, int employeeId, int id =0)
     {
       _customer = name;
       _employee_Id = employeeId;
-      _id = Id;
+      _id = id;
     }
     public overide bool Equals(System.Object otherCustomer)
     {
@@ -49,7 +49,7 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO customer_list(client, employee_id) VALUES (@customer, @employee_id);";
+      cmd.CommandText = @"INSERT INTO customers(customer, employee_id) VALUES (@customer, @employee_id);";
       cmd.Parameter.Add(new MySqlParameter("@customer, this._customer"));
       cmd.Parameter.Add(new MySqlParameter("@employee_id", this._employee_Id));
       cmd.ExecuteNonQuery();
