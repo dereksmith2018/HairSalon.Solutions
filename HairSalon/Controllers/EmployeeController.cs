@@ -13,6 +13,8 @@ namespace HairSalon.Controllers
       List<Employee> allEmployee = Employee.GetAll();
       return View(allEmployee);
     }
+    [HttpGet("/employee/new")]
+    public ActionResult CreateForm()
   }
 
 }
