@@ -33,6 +33,14 @@ namespace HairSalon.Models
     {
       return this.GetEmployeeName().GetHashCode();
     }
+    public int GetId()
+    {
+      return _id;
+    }
+    public string GetEmployeeName()
+    {
+      return _employeeName;
+    }
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -48,28 +56,28 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public static List<Item> GetAll()
+    public static List<Employee> GetAll()
     {
-      List<Employee> allCustomers = new List<Employee> {};
+      List<Employee> allEmployee = new List<Employee> {};
       MySqlConnection conn = DB.Connection();
       conn.open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM customer_list;";
+      cmd.CommandText = @"SELECT * FROM employees;";
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {
-        int CustomerId = rdr.GetInt32(0);
-        string CustomerName = rdr.GetString(1);
-        int EmployeeId = rdr.GetInt32(2);
-        Employee newCustomer = new Employee(CustomerId, CustomerName, EmployeeId);
-        allCustomers.Add(newCustomer);
+        int employeeId = rdr.GetInt32(0);
+        string name = rdr.GetString(1);
+
+        Employee newEmployee = new Employee(name, employeeId);
+        allEmployee.Add(newEmployee);
       }
       conn.Close();
       if(conn != null)
       {
         conn.Dispose();
       }
-      return allCustomers;
+      return allEmployee;
     }
   }
 }
