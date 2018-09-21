@@ -7,13 +7,13 @@ namespace HairSalon.Models
   public class Employee
   {
     private int _id;
-    private string _employeeName;
-    private int customerId;
+    private string _name;
+    private int _customer_Id;
 
-    public Employee(string employeeName, int id = 0)
+    public Employee(string name, int id = 0)
     {
       _id = id;
-      _employeeName = employeeName;
+      _name = name;
     }
     public override bool; Equals(System.Onject otherEmployee)
     {
@@ -37,9 +37,9 @@ namespace HairSalon.Models
     {
       return _id;
     }
-    public string GetEmployeeName()
+    public string GetName()
     {
-      return _employeeName;
+      return _name;
     }
     public void Save()
     {
@@ -79,5 +79,72 @@ namespace HairSalon.Models
       }
       return allEmployee;
     }
+    public void Edit(string updateName)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE employees SET name = @newName WHERE id = @searchId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      MySqlParameter name = new MySqlParameter();
+      name.ParameterName = "@newName";
+      name.Value = newName;
+      cmd.Parameters.Add(name);
+
+      cmd.ExecuteNonQuery();
+      _name = newName;
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+    public List<Client> GetClient()
+    {
+      List<Client> allClients = new List<Client> { };
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"Select * FROM clients WHERE employee_id = @employee_id;";
+      MySqlParameter employeeId = new MySqlParameter();
+      employeeId.ParameterName = "@employee_id";
+      employeeId.Value = this._id;
+      cmd.Parameters.Add(employeeId);
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int id = rdr.GetInt32(0);
+        string client = rdr.GetString(1);
+        int clientEmployeeId = rdr.GetInt32(2);
+        Client myClient = new Client(client,id,clientEmployeeId);
+        allClients.Add(myClient);
+      }
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return allClients;
+    }
+    public static void DeleteAll()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM EMPLOYEES;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
   }
 }
