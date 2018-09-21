@@ -14,7 +14,10 @@ namespace HairSalon.Controllers
       return View(allEmployee);
     }
     [HttpGet("/employee/new")]
-    public ActionResult CreateForm()
+    public ActionResult CreateFormEmployee()
+    {
+      return View();
+    }
   }
 
 }
