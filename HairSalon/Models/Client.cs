@@ -1,36 +1,36 @@
 using System;
-using MySql.Data,MySqlClient;
-using Collection.Generic;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace HairSalon.Models
 {
-  public class Customer
+  public class Client
   {
     private int _id;
     private int _employee_Id;
-    private string _customer;
+    private string _client;
 
-    public Customer(string name, int employeeId, int id =0)
+    public Client(string name, int employeeId, int id =0)
     {
-      _customer = name;
+      _client = name;
       _employee_Id = employeeId;
       _id = id;
     }
-    public overide bool Equals(System.Object otherCustomer)
+    public override bool Equals(System.Object otherClient)
     {
-      if (!(otherCustomer is Customer))
+      if (!(otherClient is Client))
       {
         return false;
       }
       else
       {
-        Customer newCustomer = (Customer)otherCustomer;
-        return this.GetId().Equals(newCustomer.GetId());
+        Client newClient = (Client)otherClient;
+        return this.GetId().Equals(newClient.GetId());
       }
     }
-    public override int GetHaseCode()
+    public override int GetHashCode()
     {
-      return this.GetId().GetHaseCode();
+      return this.GetId().GetHashCode();
     }
     public int GetId()
     {
@@ -40,17 +40,17 @@ namespace HairSalon.Models
     {
       return _employee_Id;
     }
-    public string GetCustomer()
+    public string GetClient()
     {
-      return _customer;
+      return _client;
     }
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
       conn.open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO customers(customer, employee_id) VALUES (@customer, @employee_id);";
-      cmd.Parameter.Add(new MySqlParameter("@customer, this._customer"));
+      cmd.CommandText = @"INSERT INTO client(client, employee_id) VALUES (@client, @employee_id);";
+      cmd.Parameter.Add(new MySqlParameter("@client, this._client"));
       cmd.Parameter.Add(new MySqlParameter("@employee_id", this._employee_Id));
       cmd.ExecuteNonQuery();
       _id = (int)cmd.LastInsertedId;
@@ -60,28 +60,28 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public static List<Item> GetAll()
+    public static List<Client> GetAll()
     {
-      List<Customer> allCustomers = new List<Customer> {};
+      List<Client> allClients = new List<Client> {};
       MySqlConnection conn = DB.Connection();
       conn.open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM customer_list;";
+      cmd.CommandText = @"SELECT * FROM client;";
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {
-        int CustomerId = rdr.GetInt32(0);
-        string CustomerName = rdr.GetString(1);
+        int ClientId = rdr.GetInt32(0);
+        string ClientName = rdr.GetString(1);
         int EmployeeId = rdr.GetInt32(2);
-        Customer newCustomer = new Customer(CustomerId, CustomerName, EmployeeId);
-        allCustomers.Add(newCustomer);
+        Client newClient = new Client(ClientId, ClientName, EmployeeId);
+        allClients.Add(newClient);
       }
       conn.Close();
       if(conn != null)
       {
         conn.Dispose();
       }
-      return allCustomers;
+      return allClients;
     }
 
 

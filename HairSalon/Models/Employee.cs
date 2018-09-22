@@ -15,7 +15,7 @@ namespace HairSalon.Models
       _id = id;
       _name = name;
     }
-    public override bool; Equals(System.Onject otherEmployee)
+    public override bool Equals(System.Object otherEmployee)
     {
       if (!(otherEmployee is Employee))
       {
@@ -25,13 +25,13 @@ namespace HairSalon.Models
       {
         Employee newEmployee = (Employee)otherEmployee;
         bool idEquality = this.GetId() == newEmployee.GetId();
-        bool employeeNameEquality = this.GetEmployeeName() == newEmployee.GetEmployeeName();
-        return (idEquality && employeeNameEquality)
+        bool nameEquality = this.GetName() == newEmployee.GetName();
+        return (idEquality && nameEquality);
       }
     }
-    public overide int GetHashCode()
+    public override int GetHashCode()
     {
-      return this.GetEmployeeName().GetHashCode();
+      return this.GetName().GetHashCode();
     }
     public int GetId()
     {
@@ -46,8 +46,8 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO employees(name) VALUES (@employee_name);";
-      cmd.Parameter.Add(new MySqlParameter("@employee_name, this._employeeName"));
+      cmd.CommandText = @"INSERT INTO stylist(name) VALUES (@stylist_name);";
+      cmd.Parameter.Add(new MySqlParameter("@stylistName, this._name"));
       cmd.ExecuteNonQuery();
       _id = (int)cmd.LastInsertedId;
       conn.Close();
