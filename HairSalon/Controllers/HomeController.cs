@@ -1,4 +1,4 @@
-using System;
+using HairSalon.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 

@@ -18,6 +18,14 @@ namespace HairSalon.Controllers
     {
       return View();
     }
+    [HttpPost("/employees")]
+    public ActionResult Create()
+    {
+      Employee newEmployee = new Employee(Request.Form["newEmployees"]);
+      newEmployee.Save();
+      List<Employee> allEmployees = Employee.GetAll();
+      return RedirectToAction("Index");
+    }
   }
 
 }
