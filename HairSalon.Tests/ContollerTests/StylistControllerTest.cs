@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using HairSalon.Controllers;
 using HairSalon.Models;
 
-namespace HomeController.Tests
+namespace StylistController.Tests
 {
     [TestClass]
-    public class HomeControllerTest
+    public class StylistControllerTest
     {
     }
 }

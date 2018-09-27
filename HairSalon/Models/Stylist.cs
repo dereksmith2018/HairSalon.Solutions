@@ -48,7 +48,7 @@ namespace HairSalon.Models
     // {
     //   return _client;
     // }
-    public void Save()
+    public void Save()//
     {
       MySqlConnection conn = DB.Connection();
       conn.open();
@@ -64,7 +64,7 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public void AddClient(int clientId)
+    public void AddClient(int clientId)//
     {
       MySqlConnection conn = DB.Connection();
       conn.open();
@@ -80,7 +80,7 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public static List<Stylist> GetAll()
+    public static List<Stylist> GetAll()//
     {
       List<Stylist> allStylists = new List<Stylist> {};
       MySqlConnection conn = DB.Connection();
@@ -93,7 +93,7 @@ namespace HairSalon.Models
         int id = rdr.GetInt32(0);
         string stylistName = rdr.GetString(1);
         string clientName = rdr.GetInt32(2);
-        Stylist newStylist = new Stylist(id, stylistName, clientName);
+        Stylist newStylist = new Stylist(stylistName, clientName, id);
         allStylists.Add(newStylist);
       }
       conn.Close();
@@ -103,7 +103,7 @@ namespace HairSalon.Models
       }
       return allStylists;
     }
-    public List<Stylist> GetAllClients()
+    public List<Client> GetAllClients()//
     {
       List <Client> allClients = new List<Client>{};
       MySqlConnection conn = DB.Connection();
@@ -128,7 +128,7 @@ namespace HairSalon.Models
       }
       return allClients;
     }
-    public static Stylist Find(int id)
+    public static Stylist Find(int id)//
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -136,7 +136,6 @@ namespace HairSalon.Models
       cmd.CommandText = @"SELECT * FROM stylists WHERE id = @id;";
       cmd.Parameters.AddWithValue("@id", id);
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-
       Stylist enterStylist = new Stylist("", "");
 
       while (rdr.Read())
@@ -156,7 +155,7 @@ namespace HairSalon.Models
       }
       return enterStylist;
     }
-    public void Update(string newName)
+    public void Update(string newName)//
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -173,7 +172,7 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public static void Delete(int id)
+    public static void Delete(int id)//
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -193,7 +192,7 @@ namespace HairSalon.Models
       }
     }
 
-    public static void DeleteAll()
+    public static void DeleteAll()//
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();

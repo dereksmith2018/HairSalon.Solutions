@@ -36,7 +36,7 @@ namespace HairSalon
             });
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello Everybody!.");
+                await context.Response.WriteAsync("You should not be here!!! Dont look at me!   LOOK AWAY..... please.");
             });
         }
     }
