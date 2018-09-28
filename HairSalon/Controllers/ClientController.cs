@@ -7,5 +7,5 @@ namespace HairSalon.Controllers
 {
     public class ClientController : Controller
     {
-    
+    }
 }

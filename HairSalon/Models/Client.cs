@@ -6,18 +6,15 @@ namespace HairSalon.Models
 {
   public class Client
   {
-    public int Id {get; set;}
-    public string Name {get; set;}
-    public DateTime AppointmentDate {get; set;}
-    // private int _id;
-    // private string _name;
-    // private int _customer_Id;
+    private int _id;
+    private string _name;
+    private DateTime _appointmentDate;
 
-    public Client(string name, int id = 0)
+    public Client(string name, DateTime appointmentDate, int id = 0)
     {
-      Id = id;
-      Name = name;
-      AppointmentDate = appointmentdate;
+      _id = id;
+      _name = name;
+      _appointmentDate = appointmentDate;
     }
     public override bool Equals(System.Object otherClient)
     {
@@ -27,38 +24,44 @@ namespace HairSalon.Models
       }
       else
       {
-        Client newClient = (Client)otherClient;
-        bool idEquality = (this.Id == newClient.Id);
-        bool nameEquality= (this.Name == newClient.Name);
-        bool appointmentDateEquality = this.AppointmentDate.Equals(newClient.AppointmentDate);
-        return (idEquality && nameEquality && appointmentDateEquality);
-        // bool idEquality = this.GetId() == newClient.GetId();
-        // bool nameEquality = this.GetName() == newClient.GetName();
-        // return (idEquality && nameEquality);
+        Client newClient = (Client) otherClient;
+        bool nameEquality = (this._name == newClient.GetName());
+        bool dateEquality = (this._appointmentDate == newClient.GetAppointmentDate());
+        return (nameEquality && dateEquality);
       }
     }
     public override int GetHashCode()
     {
-      return this.Name.GetHashCode();
+      return this._name.GetHashCode();
     }
-    // public int GetId()
-    // {
-    //   return _id;
-    // }
-    // public string GetName()
-    // {
-    //   return _name;
-    // }
+    public int GetId()
+    {
+      return _id;
+    }
+    public string GetName()
+    {
+      return _name;
+    }
+    public DateTime GetAppointmentDate()
+    {
+      return _appointmentDate;
+    }
     public void Save()//
     {
       MySqlConnection conn = DB.Connection();
       conn.open();
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"INSERT INTO clients (name, appointment_date) VALUES (@name, @appointment_date);";
-      cmd.Parameter.AddWithValue("@name", this.Name);
-      cmd.Parameter.AddWithValue("@appointment_date", this.AppointmentDate);
+      MySqlParameter newName = new MySqlParameter();
+      newName.ParameterName = "@newClientName";
+      newName.Value = this._name;
+      cmd.Parameters.Add(newName);
+      MySqlParameter newDate = new MySqlParameter();
+      newDate.ParameterName = "@newDate";
+      newDate.Value = this._appointmentDate;
+      cmd.Parameters.Add(newDate);
       cmd.ExecuteNonQuery();
-      this.Id = (int)cmd.LastInsertedId;
+      this._id = (int)cmd.LastInsertedId;
       conn.Close();
       if(conn != null)
       {
@@ -92,17 +95,15 @@ namespace HairSalon.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"SELECT * FROM clients WHERE id = @id;";
       cmd.Parameters.AddWithValue("@id", id);
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-
       Client enterClient = new Client("", DateTime.Now, id);
       while (rdr.Read())
       {
-        enterClient.Name = rdr.GetString(1);
-        enterClient.ApppointmentDate = rdr.GetDateTime(2);
+        enterClient.name = rdr.GetString(1);
+        enterClient.appointmentDate = rdr.GetDateTime(2);
       }
       conn.Close();
       if (conn != null)
@@ -127,7 +128,6 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-
     public static void Delete(int id)//
     {
       MySqlConnection conn = DB.Connection();
@@ -156,7 +156,5 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-
-
   }
 }
