@@ -96,32 +96,39 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM clients WHERE id = @id;";
-      cmd.Parameters.AddWithValue("@id", id);
+      cmd.CommandText = @"SELECT * FROM clients WHERE id = @searchid;";
+      cmd.Parameters.AddWithValue("@searchid", id);
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-      Client enterClient = new Client("", DateTime.Now, id);
+      int newClientId = 0;
+      string newClientName = "";
+      DateTime newAppointmentDate = new DateTime (2017,01,01);
+      // Client enterClient = new Client("", DateTime.Now, id);
       while (rdr.Read())
       {
-        enterClient.name = rdr.GetString(1);
-        enterClient.appointmentDate = rdr.GetDateTime(2);
+        newClientId = rdr.GetInt32(0);
+        newClientName = rdr.GetString(1);
+        newAppointmentDate = rdr.GetDateTime(2);
       }
+      Client lookUpClient = new Client (newClientName, newAppointmentDate, newClientId);
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      return enterClient;
+      return lookUpClient;
     }
-    public void Update(string newName)//
+    public void Update(string newName, DateTime newDate)//
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE clients SET name = @newClient WHERE id = @searchId;";
-      cmd.Parameters.AddWithValue("@name", newName);
-      cmd.Parameters.AddWithValue("id", this.Id);
+      cmd.CommandText = @"UPDATE clients SET name = @newName, appointment_date = @newDate WHERE id = @searchId;";
+      cmd.Parameters.AddWithValue("@newName", newName);
+      cmd.Parameters.AddWithValue("newDate", newDate);
+      cmd.Parameters.AddWithValue("searchid", _id);
       cmd.ExecuteNonQuery();
-      this.Name = newName;
+      _name = newName;
+      _appointmentDate = newDate;
       conn.Close();
       if (conn != null)
       {
