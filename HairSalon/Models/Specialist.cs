@@ -1,4 +1,5 @@
 using System;
+using HairSalon;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
@@ -6,12 +7,14 @@ namespace HairSalon.Models
 {
     public class Specialist
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        private int _id;
+        private string _name;
+        // public int Id { get; set; }
+        // public string Name { get; set; }
         public Specialist(string name, int id = 0)
         {
-            Id = id;
-            Name = name;
+            _id = id;
+            _name = name;
         }
         public override bool Equals(System.Object otherSpecialist)
         {
@@ -30,6 +33,14 @@ namespace HairSalon.Models
         public override int GetHashCode()
         {
             return this.Name.GetHashCode();
+        }
+        public int GetId()
+        {
+          return _id;
+        }
+        public string GetName()
+        {
+          return _name;
         }
         public void Save()
         {
@@ -117,7 +128,7 @@ namespace HairSalon.Models
             }
             return enterSpecialist;
         }
-        public void Update(string newName)
+        public void Edit(string newName)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -133,16 +144,20 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
         }
-        public static void Delete(int searchId)
+        public static void Delete(int id)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM specialists WHERE id=@id;";
-            cmd.Parameters.AddWithValue("@id", searchId);
-            cmd.ExecuteNonQuery();
-            cmd.CommandText = @"DELETE FROM stylists_specialists WHERE specialist_id=@id;";
-            cmd.Parameters.AddWithValue("@id", searchId);
+            cmd.CommandText = @"DELETE FROM specialists WHERE id = @specialistid; DELETE FROM stylists_specialists WHERE specialist_id = @specialistId;";
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@specialistId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+            // cmd.Parameters.AddWithValue("@id", searchId);
+            // cmd.ExecuteNonQuery();
+            // cmd.CommandText = @"DELETE FROM stylists_specialists WHERE specialist_id=@id;";
+            // cmd.Parameters.AddWithValue("@id", searchId);
             cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)

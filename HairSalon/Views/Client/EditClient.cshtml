@@ -1,0 +1,12 @@
+@{
+Layout = "_Layout";
+}
+<h1 class="my-3">Add a new client.</h1>
+<form class="form-group" action='/cleints' method='post'>
+    <label for="newName">Enter a name.
+      <input type="text" name="newName" class="form-control" id="newName" required>
+    </label>
+    <br>
+    <button class="btn btn-success my-2" type="submit">CLick to add client</button>
+    <a href="/clients" class="btn btn-secondary ml-2">Back to clients</a>
+</form>

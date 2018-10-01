@@ -1,4 +1,5 @@
 using System;
+using HairSalon;
 using MySql.Data.MySqlClient;
 using HairSalon;
 
