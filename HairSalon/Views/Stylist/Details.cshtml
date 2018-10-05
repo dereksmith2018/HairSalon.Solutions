@@ -1,4 +1,58 @@
-<h1>@Model["employee"].GetName()</h1>
+@using HairSalon.Models;
+<!--Nav Tabs-->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="/">Stylists</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/specialty">Specialties</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/client">Clients</a>
+  </li>
+</ul>
+<br><br>
+
+<div class="row">
+  <div class="col-md-4" id="sidebar">
+    <form action="/stylist/@Model.Id/newClient" method="post">
+      <h3>Add a New Client</h3>
+      <div class="form-group">
+        <label for="clientName">Name</label>
+        <input class="form-control" name="clientName" type="text" placeholder="First Last">
+      </div>
+      <button type="submit" class="btn btn-success">Add</button>
+    </form>
+  </div>
+  <div class="col-md-8" id="content">
+    <h1>@Model.Name</h1>
+    <hr />
+    <div class="row">
+      <div class="col-md-4">
+        <h4>Clients</h4>
+        <ul>
+        @foreach (var item in @Model.GetClients())
+        {
+          <li>@item.Name</li>
+        }
+        </ul>
+        <br />
+        <a href="/" class='btn btn-primary'>Back to Stylists</a>
+      </div>
+      <div class="col-md-4">
+        <h4>Specialties</h4>
+        <ul>
+        @foreach (var specialty in @Model.GetSpecialties())
+        {
+          <li>@specialty.Name</li>
+        }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <h1>@Model["employee"].GetName()</h1>
 <ul>
   @foreach(var client in Model["client"])
   {
@@ -15,4 +69,4 @@
 </form>
 <p>Go back <a href="/employees">Home</a>.</p>
 </div>
-</div>
+</div> -->

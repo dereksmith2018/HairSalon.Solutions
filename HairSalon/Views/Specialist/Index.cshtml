@@ -1,0 +1,38 @@
+@using HairSalon.Models;
+
+<!--Nav Tabs-->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/">Stylists</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/specialty">Specialties</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/client">Clients</a>
+  </li>
+</ul>
+<br><br>
+
+<div class="row">
+  <div class="col-md-4" id="sidebar">
+    <form action="/specialty/new" method="post">
+      <h3>Add a New Specialty</h3>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input class="form-control" name="description" type="text">
+      </div>
+      <button type="submit" class="btn btn-success">Add</button>
+    </form>
+  </div>
+  <div class="col-md-8" id="content">
+    <h1>Specialties</h1>
+    <hr />
+    @foreach (var item in @Specialty.GetAll())
+    {
+      <h3>@item.Name</h3>
+      <h6><a class='update' href='/specialty/@item.Id/update'>Update</a> | <a class='delete' href="/specialty/@item.Id/delete">Delete</a></h6>
+    }
+    <br>
+  </div>
+</div>
