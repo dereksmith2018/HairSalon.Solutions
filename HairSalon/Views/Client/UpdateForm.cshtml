@@ -1,0 +1,19 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>Clients Updating Page</title>
+</head>
+  <body>
+    <div class="container">
+    <h1>To Do List</h1>
+    <h3>Edit client:@Model["client"].GetClient()</h3>
+      <form action ='/client/@Model["client"].GetId()/update' method="post">
+      <label for="new-client">Enter a Name:</label>
+      <input id = "new-client-name" type="text" name="new-client-name" value="@Model["client"].GetClient()">
+      <button type = "submit" > Update </ button >
+      </form>
+      <h4><a href="/client">Home</a></h4>
+    </div>
+
+  </body>
+</html>

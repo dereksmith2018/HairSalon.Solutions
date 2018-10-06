@@ -1,36 +1,30 @@
-<!--Nav Tabs-->
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="/">Stylists</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="/specialty">Specialties</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/client">Clients</a>
-  </li>
-</ul>
-<br><br>
 
-<div class="row">
-  <div class="col-md-4" id="sidebar">
-    <form action="/stylist/@Model.Id/newClient" method="post">
-      <h3>Add a New Client</h3>
-      <div class="form-group">
-        <label for="clientName">Name</label>
-        <input class="form-control" name="clientName" type="text" placeholder="First Last">
-      </div>
-      <button type="submit" class="btn btn-success">Add</button>
-    </form>
-  </div>
-  <div class="col-md-8" id="content">
-    <h1>@Model.Name</h1>
-    <hr />
-    @foreach (var item in Model.GetClients())
+@using HairSalon.Models;
+<h1>Specialties</h1>
+<h2>Specialty Name: @Model["specialist"].GetSpecialist()</h2>
+
+@if (Model["stylistSpecialist"].Count != 0)
+{
+  <h4>Available Specialists:</h4>
+  <ul>
+    @foreach (var employee in Model["stylistSpecialist"])
     {
-      <h4>@item.Name</h4>
+      <li>@stylist.GetStylsit()</li>
     }
-    <br>
-    <a href="/" class='btn btn-primary'>Back to Stylists</a>
-  </div>
-</div>
+  </ul>
+}
+
+<h4>Add an employee to this specialty:</h4>
+<form action='/specialist/@Model["specialist"].GetSpecialistId()' method='post'>
+  <label for='stylist-id'>Select an stylist</label>
+  <select id='stylist-id' name='stylist-id' type='text'>
+    @foreach (var stylist in @Model["allstylists"])
+    {
+      <option value='@stylist.GetStylistId()'>@stylist.GetStylist()</option>
+    }
+  </select>
+  <button type='submit'>Add</button>
+</form>
+
+<p><a href="/specialist/">Home</a></p>
+<p><a href="/">Home</a></p>

@@ -24,7 +24,7 @@ namespace HairSalon.Controllers
             Dictionary<string, object> model = new Dictionary<string, object>();
             Stylist newStylist = Stylist.Find(id);
             List<Client> stylistClient = newStylist.GetClient();
-            List<Specialist> stylistSpecialty = newStylist.GetSpecialist();
+            List<Specialist> stylistSpecialist = newStylist.GetSpecialist();
             List<Client> allClient = Client.GetAllClient();
             List<Specialist> allSpecialists = Specialist.GetAll();
             model.Add("stylist", newStylist);
@@ -99,8 +99,8 @@ namespace HairSalon.Controllers
             model.Add("stylist", newStylist);
             return RedirectToAction("Index", new{id = stylistId});
         }
-        [HttpPost("/specialty")]
-        public ActionResult CreateSpecialty(int stylistId)
+        [HttpPost("/specialist")]
+        public ActionResult CreateSpecialist(int stylistId)
         {
             Dictionary<string, object> model = new Dictionary<string, object>();
             Stylist newStylist = Stylist.Find(stylistId);

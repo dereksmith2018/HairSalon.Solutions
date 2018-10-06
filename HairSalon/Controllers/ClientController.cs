@@ -10,12 +10,12 @@ namespace HairSalon.Controllers
       [HttpGet("/client")]
     public ActionResult Index()
     {
-      List <Client> allClients = Client.GetAll();
+      List <Client> allClients = Client.GetAllClient();
       return View(allClients);
     }
 
-    [HttpPost("/client/new")]
-    public ActionResult Create()
+    [HttpGet("/client/new")]
+    public ActionResult CreateForm()
     {
       return View();
     }
@@ -39,14 +39,7 @@ namespace HairSalon.Controllers
         model.Add("allstylists", allStylists);
         return View(model);
       }
-      [HttpGet("client/{clientId}/update")]
-        public ActionResult UpdateForm (int clientId)
-        {
-            Dictionary<string, object> model = new Dictionary<string, object>();
-            Client thisClient = Client.Find(clientId);
-            model.Add("client", thisClient);
-            return View(model);
-        }
+      
         [HttpGet("client/delete")]
         public ActionResult DeleteAll()
         {
@@ -54,10 +47,10 @@ namespace HairSalon.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet("client/{clientId}/delete")]
-        public ActionResult DeleteOne(int stylistId, int clientId)
+        public ActionResult Delete(int stylistId, int clientId)
         {
-            Client newClient = Client.Find(clientId);
-            newClient.Delete();
+            Client thisClient = Client.Find(clientId);
+            thisClient.Delete();
             return RedirectToAction("Index");
         }
         [HttpPost("/client/{clientId}/update")]
@@ -75,4 +68,5 @@ namespace HairSalon.Controllers
             client.AddStylist(stylist);
             return RedirectToAction("Details", new { id = clientId});
         }
+}
 }

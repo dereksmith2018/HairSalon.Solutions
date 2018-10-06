@@ -1,0 +1,19 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>Create a Stylist</title>
+</head>
+<body>
+  <h1>Fill out new stylist form</h1>
+  <div class="container">
+    <hr/>
+    <h2>Edit stylist: @Model["stylist"].GetStylist()</h2>
+    <form action ="/stylist/@Model["stylist"].GetStylistId()/update" method="post">
+      <label for="new-stylist">Name:</label>
+      <input id ="new-stylist" type="text" name="new-stylist" value="@Model["stylist"].GetStylist()">
+      <button type ="submit">Update</button>
+    </form>
+    <h4><a href="/stylist">Return home</a></h4>
+  </div>
+</body>
+</html>

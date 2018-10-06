@@ -25,9 +25,9 @@ namespace HairSalon.Models
             else
             {
                 Specialist newSpecialist = (Specialist) otherSpecialist;
-                bool idEquality = this.GetId() == newSpecialty.GetId();this.GetSpecialty() == newSpecialty.GetSpecialty();
+                bool idEquality = this.GetSpecialistId() == newSpecialist.GetSpecialistId();
+                bool nameEquality = this.GetSpecialist() == newSpecialist.GetSpecialist();
                 // (this.Id == newSpecialist.Id);
-                bool nameEquality = this.GetSpecialist() == newSpecialty.GetSpecialist();
                 // (this.Name == newSpecialist.Name);
                 return (idEquality && nameEquality);
             }
@@ -37,22 +37,22 @@ namespace HairSalon.Models
             string allHash = this.GetSpecialist();
             return allHash.GetHashCode();
         }
-        public int GetId()
+        public int GetSpecialistId()
         {
           return _id;
         }
-        public string GetName()
+        public string GetSpecialist()
         {
           return _name;
         }
-        public void Save()
+        public void Save()//
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO specialists (name) VALUES (@nameSpecialst);";
+            cmd.CommandText = @"INSERT INTO specialists (name) VALUES (@newSpecialist);";
             MySqlParameter newSpecialist = new MySqlParameter();
-            newSpecialist.ParameterName = "@newSpecialty";
+            newSpecialist.ParameterName = "@newSpecialist";
             newSpecialist.Value = this._name;
             cmd.Parameters.Add(newSpecialist);
             // cmd.Parameters.AddWithValue("@nameSpecialst", this.Name);
@@ -64,7 +64,7 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
         }
-        public static List<Specialist> GetAll()
+        public static List<Specialist> GetAll()//
         {
             List <Specialist> allSpecialists = new List <Specialist>{};
             MySqlConnection conn = DB.Connection();
@@ -86,29 +86,31 @@ namespace HairSalon.Models
             }
             return allSpecialists;
         }
-        public static Specialist Find(int searchId)
+        public static Specialist Find(int id)//
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"SELECT * FROM specialists WHERE id=@searchId;";
-            searchId.Value = _id;
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
             cmd.Parameters.Add(searchId);
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int id = 0;
-            string name = "";
+            int specialistId = 0;
+            string specialistName = "";
             while (rdr.Read())
             {
-                int id = rdr.GetInt32(0);
-                string name = rdr.GetString(1);
+                 specialistId = rdr.GetInt32(0);
+                 specialistName = rdr.GetString(1);
             }
-            Specialist newSpecialist = new Specialist(name, id);
+            Specialist newspecialist = new Specialist(specialistName, specialistId);
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return newSpecialist;
+            return newspecialist;
         }
         public void Delete()
         {
@@ -118,7 +120,7 @@ namespace HairSalon.Models
             cmd.CommandText = @"DELETE FROM specialists WHERE id = @specialistId; DELETE FROM stylists_specialists WHERE specialist_id = @specialistId;";
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@specialistId";
-            searchId.Value = id;
+            searchId.Value = _id;
             cmd.Parameters.Add(searchId);
             // cmd.Parameters.AddWithValue("@id", searchId);
             // cmd.ExecuteNonQuery();
@@ -176,22 +178,31 @@ namespace HairSalon.Models
             }
             return allStylists;
         }
-        // public void Addstylist(int stylistId)
-        // {
-        //     MySqlConnection conn = DB.Connection();
-        //     conn.Open();
-        //     MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-        //     cmd.CommandText = @"INSERT INTO stylists_specialists (stylist_id, specialist_id) VALUES (@stylist_id, @specialist_id);";
-        //     cmd.Parameters.AddWithValue("@stylsit_id", stylistId);
-        //     cmd.Parameters.AddWithValue("@specialist_id", this.Id);
-        //     cmd.ExecuteNonQuery();
-        //
-        //     conn.Close();
-        //     if (conn != null)
-        //     {
-        //         conn.Dispose();
-        //     }
-        // }
+        public void AddStylist(Stylist newStylist)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO stylists_specialists (stylist_id, specialist_id) VALUES (@stylistId, @specialistId);";
+            MySqlParameter specialist_id = new MySqlParameter();
+            specialist_id.ParameterName = "@specialistId";
+            specialist_id.Value = _id;
+            cmd.Parameters.Add(specialist_id);
+
+            MySqlParameter Stylist_id = new MySqlParameter();
+            Stylist_id.ParameterName = "@stylistId";
+            Stylist_id.Value = newStylist.GetStylistId();
+            cmd.Parameters.Add(Stylist_id);
+            // cmd.Parameters.AddWithValue("@stylsit_id", stylistId);
+            // cmd.Parameters.AddWithValue("@specialist_id", this.Id);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
         // public void Edit(string newName)
         // {
         //     MySqlConnection conn = DB.Connection();

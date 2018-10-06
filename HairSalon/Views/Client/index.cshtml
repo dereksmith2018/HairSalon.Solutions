@@ -1,49 +1,28 @@
-@using HairSalon.Models;
+<!DOCTYPE>
+<html>
+<head>
+<title>Clients Home Page</title>
+</head>
+  <body>
+      <div class='container'>
 
-<!--Nav Tabs-->
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="/">Stylists</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/specialty">Specialties</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="/client">Clients</a>
-  </li>
-</ul>
-<br><br>
+        <hr/>
 
-<div class="row">
-  <div class="col-md-4" id="sidebar">
-    <form action="/client/new" method="post">
-      <h3>Add a New Client</h3>
-      <div class="form-group">
-        <label for="clientName">Name</label>
-        <input class="form-control" name="clientName" type="text">
+        <h1>Clients</h1>
+        @if (@Model.Count == 0)
+        {
+          <h4>Empty!</h4>
+        }
+        @foreach (var client in Model)
+        {
+          <h3><a href='/client/@client.GetClientId()'>@client.GetClient()</a></h3>
+        }
+        <a href='/stylist/new'><button class='btn btn-success'>Click to add stylist</button></a>
+        <a href = '/client/new'><button class='btn btn-success'>Click to add client</button></a>
+        <a href='/stylist'><button class='btn btn-warning'>Click to see all employees</button></a>
+        <a href = '/specialist'><button class='btn btn-warning'>Click to see all specialist</button></a>
+        <a href = '/client/delete'><button class='btn btn-danger'>Delete Clients</button></a>
+        <a href='/'><button class='btn btn-success'>Back Home</button></a>
       </div>
-      <div class="form-group">
-        <label for="stylistId">Stylist</label>
-        <select name="stylistId">
-          @foreach (var stylist in @Stylist.GetAll())
-          {
-            <option value="@stylist.Id">@stylist.Name</option>
-          }
-        </select>
-      </div>
-      <button type="submit" class="btn btn-success">Add</button>
-    </form>
-  </div>
-  <div class="col-md-8" id="content">
-    <h1>All Clients</h1>
-    <hr />
-    @foreach (var client in @Client.GetAll())
-    {
-      <h3>@client.Name</h3>
-      <h6><a class='update' href='/client/@client.Id/update'>Update</a>
-      | <a class='delete' href="/client/@client.Id/delete">Delete</a>
-      | <a href='/stylist/@client.StylistId'>Stylist:  @Stylist.Find(@client.StylistId).Name</a></h6>
-    }
-    <br>
-  </div>
-</div>
+    </body>
+</html>
