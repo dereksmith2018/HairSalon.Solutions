@@ -7,13 +7,13 @@ using HairSalon.Models;
 namespace HairSalon.Tests
 {
     [TestClass]
-    public class ClientControllerTest
+    public class StylistControllerTest
     {
         [TestMethod]
         public void Index_ReturnsCorrectView_True()
         {
             //Arrange
-            ClientController controller = new ClientController();
+            StylistController controller = new StylistController();
 
             //Act
             ActionResult indexView = controller.Index();
@@ -25,7 +25,7 @@ namespace HairSalon.Tests
         public void CreateForm_ReturnsCorrectView_True()
         {
             //Arrange
-            ClientController controller = new ClientController();
+            StylistController controller = new StylistController();
 
             //Act
             ActionResult createView = controller.CreateForm();
@@ -38,7 +38,7 @@ namespace HairSalon.Tests
         public void Details_ReturnsCorrectView_True()
         {
             //Arrange
-            ClientController controller = new ClientController();
+            StylistController controller = new StylistController();
 
             //Act
             ActionResult detailsView = controller.Details(0);
@@ -51,13 +51,13 @@ namespace HairSalon.Tests
         public void UpdateForm_ReturnsCorrectView_True()
         {
             //Arrange
-            ClientController controller = new ClientController();
+            StylistController controller = new StylistController();
 
             //Act
-            ActionResult updateView = controller.UpdateForm(0);
+            ActionResult updateFormView = controller.UpdateForm(0);
 
             //Assert
-            Assert.IsInstanceOfType(updateView, typeof(ViewResult));
+            Assert.IsInstanceOfType(updateFormView, typeof(ViewResult));
 
         }
     }
