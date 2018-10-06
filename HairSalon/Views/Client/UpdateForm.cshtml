@@ -8,11 +8,11 @@
    
     <h3>Edit client:@Model["client"].GetClient()</h3>
       <form action ='/client/@Model["client"].GetClientId()/update' method="post">
-      <label for="new-client">Enter a Name:</label>
+      <label for="new-client">Enter Updated Name:</label>
       <input id = "new-client" type="text" name="new-client" value="@Model["client"].GetClient()">
-      <button type = "submit" > Update </button>
+      <button type = "submit">Update Name</button>
       </form>
-      <h4><a href="/client">Home</a></h4>
+      <h4><a href="/client">Return To Client Home Page</a></h4>
     </div>
 
   </body>

@@ -54,7 +54,7 @@ namespace HairSalon.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost("/client/{clientId}/update")]
-        public ActionResult UpdateClient(int stylistId, int clientId)
+        public ActionResult UpdateClient(int clientId)
         {
             Client newClient = Client.Find(clientId);
             newClient.Edit(Request.Form["client-name"]);
