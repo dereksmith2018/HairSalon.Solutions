@@ -1,15 +1,15 @@
 
 @using HairSalon.Models;
-<h1>Specialties</h1>
+
 <h2>Specialty Name: @Model["specialist"].GetSpecialist()</h2>
 
-@if (Model["stylistSpecialist"].Count != 0)
+@if (Model["specialistStylist"].Count != 0)
 {
   <h4>Available Specialists:</h4>
   <ul>
-    @foreach (var employee in Model["stylistSpecialist"])
+    @foreach (var stylist in Model["specialistStylist"])
     {
-      <li>@stylist.GetStylsit()</li>
+      <li>@stylist.GetStylist()</li>
     }
   </ul>
 }
@@ -18,7 +18,7 @@
 <form action='/specialist/@Model["specialist"].GetSpecialistId()' method='post'>
   <label for='stylist-id'>Select an stylist</label>
   <select id='stylist-id' name='stylist-id' type='text'>
-    @foreach (var stylist in @Model["allstylists"])
+    @foreach (var stylist in @Model["allStylists"])
     {
       <option value='@stylist.GetStylistId()'>@stylist.GetStylist()</option>
     }

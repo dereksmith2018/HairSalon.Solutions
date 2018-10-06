@@ -228,8 +228,8 @@ namespace HairSalon.Models
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"SELECT stylists.* FROM clients
-      JOIN stylists_clients ON (clients.id = stylist_clients.client_id)
-      JOIN stylist ON (stylist_clients.stylist_id = stylist.id)
+      JOIN stylists_clients ON (clients.id = stylists_clients.client_id)
+      JOIN stylists ON (stylists_clients.stylist_id = stylists.id)
       WHERE clients.id = @searchId;";
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
@@ -244,6 +244,7 @@ namespace HairSalon.Models
         int stylistId = rdr.GetInt32(0);
         string stylistName = rdr.GetString(1);
         Stylist Stylist = new Stylist(stylistName, stylistId);
+        newStylist.Add(Stylist);
       }
 
       conn.Close();

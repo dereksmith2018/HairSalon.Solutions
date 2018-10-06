@@ -250,20 +250,13 @@ namespace HairSalon.Models
       stylistId.Value = this._id;
       cmd.Parameters.Add(stylistId);
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      int clientId = 0;
-      string clientName = "";
-      // MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      // cmd.CommandText = @"SELECT stylist_client.id, stylist_client.client_id, clients.name AS client_name, clients.appointment_date, stylist_client.stylist_id, stylists.name AS stylist_name FROM clients JOIN stylist_client ON stylist_client.client_id = clients.id JOIN stylists ON student_client.stylist_id = stylists.id WHERE student_client.stylist_id = @stylistId;";
-      // cmd.Parameter.AddWithValue("@stylistId", this.Id);
-      // MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+  
       while (rdr.Read())
       {
-        clientId = rdr.GetInt32(0);
-        clientName = rdr.GetString(1);
-        // int stylistClientId = rdr.GetInt32();
-        // DateTime client_appointment_date = rdr.GetDateTime(3);
-        Client newClient = new Client(clientName, clientId);
-        allClients.Add(newClient);
+       int clientId = rdr.GetInt32(0);
+       string clientName = rdr.GetString(1);
+      Client newClient = new Client(clientName, clientId);
+      allClients.Add(newClient);
       }
       conn.Close();
       if (conn != null)

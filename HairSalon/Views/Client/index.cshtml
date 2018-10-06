@@ -15,7 +15,7 @@
         }
         @foreach (var client in Model)
         {
-          <h3><a href='/client/@client.GetClientId()'>@client.GetClient()</a></h3>
+          <h3><a href='/clients/@client.GetClientId()'>@client.GetClient()</a></h3>
         }
         <a href='/stylist/new'><button class='btn btn-success'>Click to add stylist</button></a>
         <a href = '/client/new'><button class='btn btn-success'>Click to add client</button></a>

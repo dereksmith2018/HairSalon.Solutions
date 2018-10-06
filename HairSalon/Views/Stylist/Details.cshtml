@@ -7,7 +7,7 @@
   <h1>Stylist Home Page</h1>
 
 <h2>Stylist Name: @Model["stylist"].GetStylist()</h2>
-@if (Model["client"].Count != 0)
+@if (@Model["client"].Count != 0)
 {
   <h4>This stylist is assigned to:</h4>
   <ul>
@@ -18,7 +18,7 @@
   </ul>
 }
 
-@if (Model["stylistSpecialist"].Count != 0)
+@if (@Model["stylistSpecialist"].Count != 0)
 {
   <h4>This stylist has these specialties:</h4>
   <ul>
@@ -54,8 +54,8 @@
 </form>
 
 <p><a href="/client/">Return to Client List</a></p>
-<p><a href="/stylist/@Model["stylist"].GetStylistId()/update">Update a stylist</a></p>
-<p><a href="/stylist/@Model["stylist"].GetStylistId()/delete">Delete a stylist</a></p>
+<p><a href="/stylist/@Model["stylist"].GetStylistId()/update">Update Stylist</a></p>
+<p><a href="/stylist/@Model["stylist"].GetStylistId()/delete">Delete Stylist</a></p>
 <p><a href="/">Home/a></p>
 </body>
 </html>
