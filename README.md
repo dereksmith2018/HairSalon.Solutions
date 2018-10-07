@@ -1,6 +1,6 @@
 # Hair Salon
 
-##### C# exercise By Derek SMith., Epicodus - September, 2018
+##### C# exercise By Derek Smith., Epicodus - September, 2018
 
 ## *Description*
 _Hair Salon_ is a web app The user will be able to add a stylist, specialist and a client to the database. You will be able to assign a client to a employee.
@@ -8,20 +8,20 @@ _Hair Salon_ is a web app The user will be able to add a stylist, specialist and
 
 
 ## *Specifications*
-* As a salon employee, I need to be able to see a list of all our stylists.
-* As an employee, I need to add new stylists to our system when they are hired.
-* As an employee, I need to be able to add new clients to a specific stylist. I should not be able to add a client if no stylists have been added.
+* As a salon stylist, I need to be able to see a list of all our stylists.
+* As an stylist, I need to add new stylists to our system when they are hired.
+* As an stylist, I need to be able to add new clients to a specific stylist. I should not be able to add a client if no stylists have been added.
 * And here are the user stories that the salon owner would like you to add:
-* As an employee, I need to be able to delete stylists (all and single).
-* As an employee, I need to be able to delete clients (all and single).
-* As an employee, I need to be able to view clients (all and single).
-* As an employee, I need to be able to edit JUST the name of a stylist. (You can choose to allow employees to edit additional properties but it is not required.)
-* As an employee, I need to be able to edit ALL of the information for a client.
-* As an employee, I need to be able to add a specialty and view all specialties that have been added.
-* As an employee, I need to be able to add a specialty to a stylist.
-* As an employee, I need to be able to click on a specialty and see all of the stylists that have that specialty.
-* As an employee, I need to see the stylist's specialties on the stylist's details page.
-* As an employee, I need to be able to add a stylist to a specialty.
+* As an stylist, I need to be able to delete stylists (all and single).
+* As an stylist, I need to be able to delete clients (all and single).
+* As an stylist, I need to be able to view clients (all and single).
+* As an stylist, I need to be able to edit JUST the name of a stylist. (You can choose to allow employees to edit additional properties but it is not required.)
+* As an stylist, I need to be able to edit ALL of the information for a client.
+* As an stylist, I need to be able to add a specialty and view all specialties that have been added.
+* As an stylist, I need to be able to add a specialty to a stylist.
+* As an stylist, I need to be able to click on a specialty and see all of the stylists that have that specialty.
+* As an stylist, I need to see the stylist's specialties on the stylist's details page.
+* As an stylist, I need to be able to add a stylist to a specialty.
 
 ## *Known Bugs & Issues*
 User interface is not stylized as much as it could be.
