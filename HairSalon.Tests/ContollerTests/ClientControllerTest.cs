@@ -47,18 +47,7 @@ namespace HairSalon.Tests
             Assert.IsInstanceOfType(detailsView, typeof(ViewResult));
 
         }
-        [TestMethod]
-        public void UpdateForm_ReturnsCorrectView_True()
-        {
-            //Arrange
-            ClientController controller = new ClientController();
-
-            //Act
-            ActionResult updateView = controller.UpdateForm(0);
-
-            //Assert
-            Assert.IsInstanceOfType(updateView, typeof(ViewResult));
-
-        }
     }
+        
+    
 }

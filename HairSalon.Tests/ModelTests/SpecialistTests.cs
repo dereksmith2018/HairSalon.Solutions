@@ -7,11 +7,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HairSalon.Tests
 {
     [TestClass]
-    public class SpecialistTests : IDisposable
+    public class SpecialistTest : IDisposable
     {
-        public SpecialistTests()
+        public SpecialistTest()
         {
-            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=derek_smith_tests;";
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=derek_smith_test;";
         }
         public void Dispose()
         {
@@ -19,9 +19,11 @@ namespace HairSalon.Tests
             Client.DeleteAll();
             Specialist.DeleteAll();
         }
+    
+    
 
         [TestMethod]
-        public void GetAll_DBStartsEmpty_Empty()
+        public void GetAll_DBStartsEmpty_Empty()//passed
         {
             //Arrange
             int count = Specialist.GetAll().Count;
@@ -31,7 +33,7 @@ namespace HairSalon.Tests
         }
 
         [TestMethod]
-        public void Equals_TrueForSameName_Specialist()
+        public void Equals_TrueForSameName_Specialist()//passed
         {
             //Arrange
             Specialist entryOne = new Specialist("hello", 0);
@@ -45,8 +47,8 @@ namespace HairSalon.Tests
         public void Save_SpecialistToDatabase_List()
         {
             //Arrange
-            Specialist testSpecialist = new Specialist("hello", 0);
-            testSpecialty.Save();
+            Specialist testSpecialist = new Specialist("hello", 1);
+            testSpecialist.Save();
 
             //Act
             List<Specialist> result = Specialist.GetAll();
@@ -57,7 +59,7 @@ namespace HairSalon.Tests
         }
 
         [TestMethod]
-        public void Save_AssignsIdToObject_id()
+        public void Save_AssignsIdToObject_SpecialistId()
         {
             //Arrange
             Specialist testSpecialist = new Specialist("hello", 0);
@@ -66,26 +68,28 @@ namespace HairSalon.Tests
             //Act
             Specialist saveSpecialist = Specialist.GetAll()[0];
 
-            int result = saveSpecialty.GetId();
-            int testId = testSpecialty.GetId();
+            int result = saveSpecialist.GetSpecialistId();
+            int testId = testSpecialist.GetSpecialistId();
 
             //Assert 
             Assert.AreEqual(testId, result);
         }
-        [TestMethod]
-        public void Find_FindsSpecialistInDatabase_Specialist()
-        {
-            //Arrange
-            Specialist testSpecialty = new Specialist("hello", 0);
-            testSpecialty.Save();
+        // [TestMethod]
+        // public void Find_FindsSpecialistInDatabase_Specialist()
+        // {
+        //     //Arrange
+        //     Specialist testSpecialist = new Specialist("hello", 0);
+        //     testSpecialist.Save();
 
-            //Act
-            Specialist result = Specialist.Find(testSpecialist.GetSpecialistId());
+        //     //Act
+        //     Specialist result = Specialist.Find(testSpecialist.GetSpecialistId());
 
-            //Assert
+        //     //Assert
 
-            Assert.AreEqual(testSpecialist, result);
+        //     Assert.AreEqual(testSpecialist, result);
 
+        // }
         }
-    }
-}
+        }
+                
+    

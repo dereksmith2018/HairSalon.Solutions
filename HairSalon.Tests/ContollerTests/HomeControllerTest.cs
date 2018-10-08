@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using HairSalon.Controllers;
 using HairSalon.Models;
 
-namespace HomeController.Tests
+namespace HairSalon.Tests
 {
     [TestClass]
     public class HomeControllerTest
